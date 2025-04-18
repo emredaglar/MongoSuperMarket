@@ -11,5 +11,6 @@ namespace MongoSuperMarket.Settings
         public string FeatureCollectionName { get; set; }
         public string ProductCollectionName { get; set; }
         public string SellingCollectionName { get; set; }
+        //string GetCollectionName(string entityName);
     }
 }
