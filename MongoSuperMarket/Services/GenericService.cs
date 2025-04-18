@@ -66,28 +66,36 @@ namespace MongoSuperMarket.Services
 
         public async Task UpdateAsync(TUpdateDto updateDto)
         {
-            
+            // DTO içindeki Id alanını bul
             var idProperty = typeof(TUpdateDto).GetProperties()
-                                               .FirstOrDefault(p => p.Name.EndsWith("Id",StringComparison.OrdinalIgnoreCase));
+                                               .FirstOrDefault(p => p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase));
 
             if (idProperty != null)
             {
+                // Id değerini al string olarak
                 var idValue = idProperty.GetValue(updateDto)?.ToString();
+
                 if (!string.IsNullOrEmpty(idValue))
                 {
-                    
+                    // MongoDB için gerekli olan ObjectId tipine çevir
                     var objectId = ObjectId.Parse(idValue);
 
-                 
+                    // _id alanı üzerinden filtre oluştur
                     var filter = Builders<TEntity>.Filter.Eq("_id", objectId);
+
+                    // DTO'yu entity'e dönüştür (maple)
                     var entity = _mapper.Map<TEntity>(updateDto);
+
+                    // Mongo'daki belgeyi yenisiyle değiştir
                     await _collection.ReplaceOneAsync(filter, entity);
                 }
             }
             else
             {
+                // Eğer ID alanı bulunamazsa, hata fırlat
                 throw new ArgumentException("Id alanı bulunamadı.", nameof(updateDto));
             }
         }
+
     }
 }
