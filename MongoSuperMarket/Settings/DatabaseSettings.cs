@@ -1,6 +1,6 @@
 ﻿namespace MongoSuperMarket.Settings
 {
-    public class DatabaseSettings:IDatabaseSetting
+    public class DatabaseSettings:IDatabaseSettings
     {
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
