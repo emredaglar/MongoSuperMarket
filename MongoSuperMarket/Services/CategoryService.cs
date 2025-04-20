@@ -7,7 +7,7 @@ namespace MongoSuperMarket.Services
 {
     public class CategoryService : GenericService<Category, CreateCategoryDto, UpdateCategoryDto, GetByIdCategoryDto, ResultCategoryDto>, ICategoryService
     {
-        public CategoryService(IMapper mapper, IDatabaseSettings databaseSettings, string collectionName) : base(mapper, databaseSettings, collectionName)
+        public CategoryService(IMapper mapper, IDatabaseSettings databaseSettings) : base(mapper, databaseSettings, databaseSettings.CategoryCollectionName)
         {
         }
     }

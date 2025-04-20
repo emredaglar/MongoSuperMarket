@@ -7,7 +7,7 @@ namespace MongoSuperMarket.Services
 {
     public class FeatureService : GenericService<Feature, CreateFeatureDto, UpdateFeatureDto, GetByIdFeatureDto, ResultFeatureDto>, IFeatureService
     {
-        public FeatureService(IMapper mapper, IDatabaseSettings databaseSettings, string collectionName)
+        public FeatureService(IMapper mapper, IDatabaseSettings databaseSettings)
             : base(mapper, databaseSettings, databaseSettings.FeatureCollectionName)
         {
         }
