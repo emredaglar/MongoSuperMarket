@@ -15,11 +15,12 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
+        public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetAllAsync();
-            var pagedCategories = categories.ToPagedList(page, pageSize);
-            return View(pagedCategories);
+
+            var values =await _categoryService.GetAllAsync();
+
+            return View(values);
         }
 
         [HttpGet]

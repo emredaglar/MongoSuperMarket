@@ -1,0 +1,55 @@
+﻿@model ResultProductDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+
+<div class="card">
+    <h5 class="card-header">Ürün Listesi</h5>
+    <div class="table-responsive text-nowrap">
+
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ürün Adı</th>
+                    <th>Ürün Fotoğrafı</th>
+                    <th>Sil</th>
+                    <th>Güncelle</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.CategoryName</td>
+                        <td>
+                            <img src="@item.Icon" style="width:50px;height:50px;" />
+                        </td>
+                        <td><a href="/Admin/Category/DeleteCategory/@item.CategoryId" class="btn btn-outline-danger">Sil</a></td>
+                        <td><a href="/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-outline-success">Güncelle</a></td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+
+
+        <br />
+        <div class="container">
+            <div class="d-flex justify-content-start gap-2">
+                <a href="/Admin/Category/CreateCategory/" class="btn btn-outline-primary">Yeni Kategori Ekle</a>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+
+
+
