@@ -44,7 +44,7 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
         //Kasada işine devam etmek    Ana işlem kilitlenmeden devam eder
         public async Task<IActionResult> Index()
         {
-            var values = await _productService.GetAllAsync();
+            var values = await _productService.GetAllProductWithCategoryAsync();
             return View(values);
         }
         [HttpGet]
@@ -67,7 +67,7 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(string id)
         {
-            var values=_productService.GetByIdAsync(id);
+            var values=await _productService.GetByIdAsync(id);
             return View(values);
         }
 
