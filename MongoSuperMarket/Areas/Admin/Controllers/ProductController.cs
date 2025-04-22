@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MongoSuperMarket.Dtos.ProductDtos;
 using MongoSuperMarket.Services;
 using System;
@@ -9,10 +10,12 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
         //task ve await hakkında;
 
@@ -47,6 +50,12 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateProduct()
         {
+            var categories = await _categoryService.GetAllAsync();
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.CategoryId.ToString(),
+                Text = c.CategoryName
+            }).ToList();
             return View();
         }
         [HttpPost]
