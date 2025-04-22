@@ -68,6 +68,12 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateProduct(string id)
         {
             var values=await _productService.GetByIdAsync(id);
+            var categories = await _categoryService.GetAllAsync();
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.CategoryId.ToString(),
+                Text = c.CategoryName
+            }).ToList();
             return View(values);
         }
 
