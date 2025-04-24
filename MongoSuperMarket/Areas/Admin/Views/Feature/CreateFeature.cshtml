@@ -1,0 +1,39 @@
+﻿@model CreateFeatureDto
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<h3>Yeni Öne Çıkan Ekle</h3>
+<br />
+<form method="post">
+	<div class="form-group">
+		@Html.Label("Öne Çıkan Başlığı")
+		<input type="text" asp-for="Header" class="form-control" />
+		<span asp-validation-for="Header" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("Açıklama")
+		<input type="text" asp-for="Title" class="form-control" />
+		<span asp-validation-for="Title" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("Alt Açıklama")
+		<input type="text" asp-for="SubTitle" class="form-control" />
+		<span asp-validation-for="SubTitle" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("Görsel Yolu")
+		<input type="text" asp-for="Image" class="form-control" />
+		<span asp-validation-for="Image" class="text-danger"></span>
+	</div>
+	<br />
+	<br />
+	<button type="submit" class="btn btn-outline-primary">Ekle</button>
+</form>
+
+
+

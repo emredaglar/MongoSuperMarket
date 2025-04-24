@@ -1,0 +1,74 @@
+﻿@model List<ResultFeatureDto>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+	int count = 0;
+}
+
+<div class="card">
+	<h5 class="card-header">Öne Çıkanlar Listesi</h5>
+	<div class="table-responsive text-nowrap">
+
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Görsel</th>
+					<th>Başlık</th>
+					<th>Açıklama</th>
+					<th>Alt Açıklama</th>
+					<th>İşlemler</th>
+
+				</tr>
+			</thead>
+			<tbody>
+
+				@if (Model != null && Model.Any())
+				{
+					foreach (var discount in Model)
+					{
+						count++;
+						<tr>
+							<td>@count</td>
+							<td>
+								<img src="@discount.Image" style="width:50px;height:50px;" />
+							</td>
+							<td>@discount.Header</td>
+							<td>@discount.Title</td>
+							<td>@discount.SubTitle</td>
+
+							<td>
+								<a href="@Url.Action("UpdateFeature", "Feature", new { id = discount.FeatureId })" class="btn btn-warning btn-sm">Düzenle</a>
+								<a href="@Url.Action("DeleteFeature", "Feature", new { id = discount.FeatureId })" class="btn btn-danger btn-sm"
+								   onclick="return confirm('Bu indirimi silmek istediğinize emin misiniz?');">Sil</a>
+							</td>
+						</tr>
+					}
+				}
+				else
+				{
+					<tr>
+						<td colspan="7" class="text-center">Listelenecek Öne Çıkan bulunamadı.</td>
+					</tr>
+				}
+
+			</tbody>
+
+		</table>
+
+
+
+		<br />
+		<div class="container">
+			<div class="d-flex justify-content-start gap-2">
+				<a href="/Admin/Feature/CreateFeature/" class="btn btn-outline-primary">Yeni Öne Çıkan Ekle</a>
+			</div>
+		</div>
+		<br />
+	</div>
+</div>
+
+
+
+
+
