@@ -1,0 +1,40 @@
+﻿@model GetByIdDiscountDto
+@{
+    ViewData["Title"] = "UpdateDiscount";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<h3>İndirim Güncelle</h3>
+<br />
+<form method="post">
+	<input type="hidden" asp-for="DiscountId" />
+	<div class="form-group">
+		@Html.Label("İndirim Başlığı")
+		<input type="text" asp-for="DiscountTitle" class="form-control" />
+		<span asp-validation-for="DiscountTitle" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("Açıklama")
+		<input type="text" asp-for="Description" class="form-control" />
+		<span asp-validation-for="Description" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("İndirim Oranı")
+		<input type="text" asp-for="DiscountPercent" class="form-control" />
+		<span asp-validation-for="DiscountPercent" class="text-danger"></span>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.Label("Görsel Yolu")
+		<input type="text" asp-for="Image" class="form-control" />
+		<span asp-validation-for="Image" class="text-danger"></span>
+	</div>
+	<br />
+	<br />
+	<button type="submit" class="btn btn-outline-primary">Ekle</button>
+</form>
+
+
+

@@ -22,7 +22,7 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
 
             return View(values);
         }
-
+         
         [HttpGet]
         public IActionResult CreateCategory()
         {
