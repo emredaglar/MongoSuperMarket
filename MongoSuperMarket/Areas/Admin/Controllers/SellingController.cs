@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MongoSuperMarket.Dtos.SellingDtos;
 using MongoSuperMarket.Services;
+using System.Globalization;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MongoSuperMarket.Areas.Admin.Controllers
 {
@@ -8,10 +12,12 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
     public class SellingController : Controller
     {
         private readonly ISellingService _sellingService;
+        private  readonly IProductService _productService;
 
-        public SellingController(ISellingService sellingService)
+        public SellingController(ISellingService sellingService, IProductService productService)
         {
             _sellingService = sellingService;
+            _productService = productService;
         }
 
         public async Task<IActionResult> Index()
@@ -21,14 +27,24 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateSelling()
+        public async Task<IActionResult> CreateSelling()
         {
+            var products=await _productService.GetAllAsync();
+            ViewBag.Products = products.Select(prd => new SelectListItem
+            {
+                Value = prd.ProductId.ToString(),
+                Text = $"{prd.ProductName}|{prd.ProductPrice.ToString("F2", CultureInfo.InvariantCulture)}"
+            }).ToList();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateSelling(CreateSellingDto createSellingDto)
         {
+            if (createSellingDto.SellingDate == DateTime.MinValue)
+            {
+                createSellingDto.SellingDate = DateTime.Now;
+            }
             await _sellingService.CreateAsync(createSellingDto);
             return RedirectToAction("Index");
         }
