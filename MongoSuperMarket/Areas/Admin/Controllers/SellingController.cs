@@ -22,7 +22,7 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var values = await _sellingService.GetAllAsync();
+            var values = await _sellingService.GetAllSellingWithProductNameAsync();
             return View(values);
         }
 
