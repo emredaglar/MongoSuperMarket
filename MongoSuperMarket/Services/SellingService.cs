@@ -10,7 +10,7 @@ namespace MongoSuperMarket.Services
     public class SellingService : GenericService<Selling, CreateSellingDto, UpdateSellingDto, GetByIdSellingDto, ResultSellingDto>, ISellingService
     {
         private readonly IMongoCollection<Product> _productCollection;
-        public SellingService(IMapper mapper, IDatabaseSettings databaseSettings, IMongoCollection<Product> productCollection)
+        public SellingService(IMapper mapper, IDatabaseSettings databaseSettings)
             : base(mapper, databaseSettings, databaseSettings.SellingCollectionName)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);

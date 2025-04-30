@@ -68,5 +68,6 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
             await _sellingService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
+
     }
 }

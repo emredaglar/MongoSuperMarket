@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gizemli Kahin</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #111 0%, #000 100%);
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #8f8;
+        }
+
+        input, button {
+            font-size: 20px;
+            padding: 10px;
+            margin: 10px;
+            background: #222;
+            color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+
+            input::placeholder {
+                color: #0f05;
+            }
+
+        #fakeOutput {
+            font-size: 24px;
+            margin-top: 30px;
+            letter-spacing: 2px;
+            min-height: 40px;
+            background: #000;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #0f0;
+        }
+
+        #listening {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #0f0;
+            display: none;
+        }
+
+        #history {
+            margin-top: 40px;
+            color: #8f8;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 90%;
+            border-top: 1px solid #0f0;
+            padding-top: 10px;
+        }
+
+        .history-item {
+            margin: 5px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .glow {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+
+      
+
+        to {
+            text-shadow: 0 0 20px #0f0, 0 0 30px #0f0;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <h1 class="glow">🔮 Gizemli Kahin 🔮</h1>
+    <p>(Kahin cevabı "ruhsal olarak" yazacak...)</p>
+    <input type="text" id="realInput" placeholder="Kahin Bana cevap ver..." autofocus>
+    <div id="fakeOutput">Kahin: Kahin Bana cevap ver...</div>
+    <button id="voiceBtn">🎙️ Sesle Sor</button>
+    <div id="listening">🔊 Dinleniyor...</div>
+    <div id="history"></div>
+
+    <script>
+        const input = document.getElementById('realInput');
+        const fakeOutput = document.getElementById('fakeOutput');
+        const voiceBtn = document.getElementById('voiceBtn');
+        const listening = document.getElementById('listening');
+        const history = document.getElementById('history');
+
+        const fakeMessage = "Kahin Bana cevap ver...";
+        let displayedIndex = 0;
+        let actualText = '';
+
+        function addToHistory(text, answer) {
+          const item = document.createElement('div');
+          item.className = 'history-item';
+          item.innerHTML = `<strong>Soru:</strong> ${text}<br><strong>Cevap:</strong> ${answer}`;
+          history.prepend(item);
+        }
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            fakeOutput.textContent = 'Kahin: ' + actualText;
+            addToHistory(actualText, actualText);
+            input.value = '';
+            actualText = '';
+            displayedIndex = 0;
+            e.preventDefault();
+          } else if (e.key.length === 1) {
+            actualText += e.key;
+            fakeOutput.textContent = "Kahin: " + actualText;
+            e.preventDefault();
+          } else if (e.key === 'Backspace') {
+            actualText = actualText.slice(0, -1);
+            fakeOutput.textContent = "Kahin: " + actualText;
+            e.preventDefault();
+          }
+        });
+
+        voiceBtn.addEventListener('click', () => {
+          listening.style.display = 'block';
+          listening.classList.add('glow');
+          setTimeout(() => {
+            listening.textContent = '🔮 Ruhlar cevap arıyor...';
+          }, 1500);
+          setTimeout(() => {
+            listening.textContent = '✅ Ses kaydedildi!';
+            fakeOutput.textContent = 'Kahin: ' + actualText;
+            addToHistory('Sesli soru (şaka)', actualText);
+          }, 3500);
+          setTimeout(() => {
+            listening.style.display = 'none';
+            listening.classList.remove('glow');
+            listening.textContent = '🔊 Dinleniyor...';
+          }, 5000);
+        });
+    </script>
+</body>
+</html>
