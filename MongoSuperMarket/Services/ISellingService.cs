@@ -7,5 +7,6 @@ namespace MongoSuperMarket.Services
     {
 
         Task<List<ResultSellingDto>> GetAllSellingWithProductNameAsync();
+        Task<List<ResultSellingDto>> GetMostSellingProductsAsync();
     }
 }

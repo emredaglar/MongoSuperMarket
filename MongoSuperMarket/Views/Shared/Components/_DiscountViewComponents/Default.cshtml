@@ -1,0 +1,25 @@
+﻿@model List<ResultDiscountDto>
+
+@{
+    int index = 0; // Sayaç tanımla
+}
+
+@foreach (var item in Model.Take(2))
+{
+    // Arka plan pozisyonunu sıraya göre belirle
+    var bgPosition = index % 2 == 0 ? "right top" : "right bottom";
+
+    // Sınıf adını sıraya göre belirle
+    var blockClass = index % 2 == 0 ? "block-2" : "block-3";
+
+    <div class="banner-ad bg-success-subtle @blockClass" style="background:url('@item.Image') no-repeat;background-position: @bgPosition; margin-bottom: 20px;">
+        <div class="row banner-content p-5">
+            <div class="content-wrapper col-md-7">
+                <div class="categories sale mb-3 pb-3">@item.DiscountPercent% @item.DiscountTitle</div>
+                <h3 class="banner-title">@item.Description</h3>
+            </div>
+        </div>
+    </div>
+
+    index++; // Sayaç artır
+}

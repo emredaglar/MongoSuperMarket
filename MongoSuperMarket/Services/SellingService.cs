@@ -38,5 +38,36 @@ namespace MongoSuperMarket.Services
 
             return query;
         }
+        public async Task<List<ResultSellingDto>> GetMostSellingProductsAsync()
+        {
+          
+            var topSellingProducts = await _collection.Aggregate()
+                .Group(x => x.ProductId, g => new
+                {
+                    ProductId = g.Key,
+                    TotalCount = g.Sum(x => x.Count)
+                })
+                .SortByDescending(x => x.TotalCount)
+                .Limit(6)
+                .ToListAsync();
+
+           
+            var productIds = topSellingProducts.Select(x => x.ProductId).ToList();
+            var products = await _productCollection.AsQueryable()
+                .Where(product => productIds.Contains(product.ProductId))
+                .ToListAsync();
+
+            // Sonuçları oluşturun
+            var result = topSellingProducts.Select(topProduct => new ResultSellingDto
+            {
+                ProductId = topProduct.ProductId,
+                Count = topProduct.TotalCount,
+                ProductName = products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductName,
+                ProductImage = products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductImage,
+                ProductPrice = (decimal)(products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductPrice)
+            }).ToList();
+
+            return result;
+        }
     }
 }

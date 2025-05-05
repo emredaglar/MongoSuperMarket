@@ -8,50 +8,17 @@ namespace MongoSuperMarket.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(IProductService productService)
         {
-            _categoryService = categoryService;
+            _productService = productService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-
-            var values =await _categoryService.GetAllAsync();
-
-            return View(values);
-        }
-         
-        [HttpGet]
-        public IActionResult CreateCategory()
-        {
-            return View();  
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
-        {
-            await _categoryService.CreateAsync(createCategoryDto);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> UpdateCategory(string id)
-        {
-            var values = await _categoryService.GetByIdAsync(id);
-            return View(values);
-        }
-        [HttpPost]
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
-        {
-            await _categoryService.UpdateAsync(updateCategoryDto);
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> DeleteCategory(string id)
-        {
-            await _categoryService.DeleteAsync(id);
-            return RedirectToAction("Index");
+            var value = await _productService.GetProductsByCategoryIdAsync(id);
+            return View(value);
         }
     }
 }
