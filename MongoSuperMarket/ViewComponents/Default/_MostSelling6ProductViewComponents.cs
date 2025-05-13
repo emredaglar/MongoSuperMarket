@@ -15,7 +15,7 @@ namespace MongoSuperMarket.ViewComponents.Default
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
 			var mostSellingProducts = await _productService.GetMostSellingProductsAsync();
-			return View();
+			return View(mostSellingProducts);
 		}
 	}
 }

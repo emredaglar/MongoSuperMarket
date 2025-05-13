@@ -57,15 +57,15 @@ namespace MongoSuperMarket.Services
                 .Where(product => productIds.Contains(product.ProductId))
                 .ToListAsync();
 
-            // Sonuçları oluşturun
             var result = topSellingProducts.Select(topProduct => new ResultSellingDto
             {
                 ProductId = topProduct.ProductId,
                 Count = topProduct.TotalCount,
                 ProductName = products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductName,
                 ProductImage = products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductImage,
-                ProductPrice = (decimal)(products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductPrice)
+                ProductPrice = products.FirstOrDefault(product => product.ProductId == topProduct.ProductId)?.ProductPrice ?? 0
             }).ToList();
+
 
             return result;
         }
